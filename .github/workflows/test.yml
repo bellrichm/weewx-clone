@@ -1,5 +1,11 @@
 name: Run Tests
-
+# This can be run/tested locally using, https://github.com/nektos/act
+# Example invocation:
+#     sudo /home/richbell/bin/act push -P ubuntu-latest=catthehacker/ubuntu:runner-latest 
+#
+# Note: The image catthehacker/ubuntu:runner-latest uses the id 'runner'
+#       and the image catthehacker/ubuntu:act-latest uses the id 'root'.
+#       Some tests fail when run using 'root'.
 on:
   push:
     # branches: [ "master" ]
@@ -15,7 +21,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Install test prereqs
+
+    - name: Initialize environment
+      run: |
+      
+        sudo apt-get update
+
+    - name: Install act prereqs
+      if: ${{ env.ACT }}
+      run: |
+        
+        sudo apt-get install -y python3-pip
+
+    - name: Install test environment prereqs
       run: |
 
         cd /; sudo pip install pytest pytest-cov; cd -      
@@ -23,14 +41,13 @@ jobs:
     - name: Set up mysql/mariadb
       run: |
 
-        sudo apt-get update
         sudo apt-get install -y mariadb-server
         sudo service mariadb start
 
         # a simple check that db server is up and running
         # sudo mysql -u root -e "SHOW DATABASES
 
-    - name: initialize db
+    - name: Initialize mysql/mariadb db
       run: |
 
         sudo bin/weedb/tests/setup_mysql.sh
@@ -40,7 +57,7 @@ jobs:
         #sudo mysql --force -u root -e "SHOW GRANTS FOR 'weewx'" || true
         #sudo mysql --force -u root -e "select grantee, group_concat(privilege_type) from information_schema.user_privileges group by grantee" || true
 
-    - name: install WeeWX prereq
+    - name: Install WeeWX prereqs
       run: |        
 
         sudo apt-get install -y python3-configobj
@@ -51,7 +68,7 @@ jobs:
         sudo apt-get install -y python3-ephem
         sudo apt-get install -y python3-mysqldb       
 
-    - name: run tests
+    - name: Run tests
       run: |        
 
         # This is a good test to check that the databases are setup
@@ -60,10 +77,10 @@ jobs:
         # This is a good test that the id has reasonable privileges (not root)
         #PYTHONPATH=bin python3 bin/weedb/tests/test_errors.py
 
-        # This is a nice dimple test
-        #PYTHONPATH=bin python3 bin/weewx/tests/test_units.py 
-
-        #PYTHONPATH=bin pytest -v bin
+        # This is a nice simple test
+        #PYTHONPATH=bin python3 bin/weewx/tests/test_units.py
 
         # Example of calculating coverage, but using codecov probably makes more sense
-        PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
+        #PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
+
+        PYTHONPATH=bin pytest -v bin
