@@ -1,0 +1,35 @@
+name: Python application
+
+on:
+  push:
+    # branches: [ "master" ]
+  pull_request:
+    # branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up mysql/mariadb
+      run: |
+
+        sudo apt-get update
+        sudo apt-get install -y mariadb-server
+        sudo service mariadb start
+
+        # a simple check that db server is up and running
+        # sudo mysql -u root -e "SHOW DATABASES"
+
+    - name: initialize db
+      run: |
+
+        sudo bin/weedb/tests/setup_mysql.sh
+        echo "finished"
+
+        sudo mysql --force -u root -e "SHOW GRANTS FOR 'weewx'" || true
+        sudo mysql --force -u root -e "select grantee, group_concat(privilege_type) from information_schema.user_privileges group by grantee" || true
