@@ -31,5 +31,6 @@ jobs:
         sudo bin/weedb/tests/setup_mysql.sh
         echo "finished"
 
-        sudo mysql --force -u root -e "SHOW GRANTS FOR 'weewx'" || true
-        sudo mysql --force -u root -e "select grantee, group_concat(privilege_type) from information_schema.user_privileges group by grantee" || true
+        # check that db is setup
+        #sudo mysql --force -u root -e "SHOW GRANTS FOR 'weewx'" || true
+        #sudo mysql --force -u root -e "select grantee, group_concat(privilege_type) from information_schema.user_privileges group by grantee" || true
