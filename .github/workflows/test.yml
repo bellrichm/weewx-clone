@@ -37,6 +37,7 @@ jobs:
 
     - name: install WeeWX prereq
       run: |        
+
         sudo apt-get install -y python3-configobj
         sudo apt-get install -y python3-pil
         sudo apt-get install -y python3-serial
