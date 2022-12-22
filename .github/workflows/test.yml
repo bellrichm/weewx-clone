@@ -34,3 +34,15 @@ jobs:
         # check that db is setup
         #sudo mysql --force -u root -e "SHOW GRANTS FOR 'weewx'" || true
         #sudo mysql --force -u root -e "select grantee, group_concat(privilege_type) from information_schema.user_privileges group by grantee" || true
+
+    - name: install WeeWX prereq
+      run: |        
+
+        exit
+        sudo apt-get install -y python3-configobj
+        sudo apt-get install -y python3-pil
+        sudo apt-get install -y python3-serial
+        sudo apt-get install -y python3-usb
+        sudo apt-get install -y python3-cheetah
+        sudo apt-get install -y python3-ephem
+        sudo apt-get install -y python3-mysqldb
