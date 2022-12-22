@@ -57,3 +57,5 @@ jobs:
 
         # This is a nice dimple test
         #PYTHONPATH=bin python3 bin/weewx/tests/test_units.py 
+
+        PYTHONPATH=bin pytest -v bin
