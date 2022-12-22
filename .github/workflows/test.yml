@@ -19,7 +19,7 @@ jobs:
         run: |
 
           cd /; sudo pip install pytest pytest-cov; cd -      
-          
+
     - name: Set up mysql/mariadb
       run: |
 
