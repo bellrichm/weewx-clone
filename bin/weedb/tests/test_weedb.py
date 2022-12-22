@@ -38,6 +38,13 @@ schema = [(0, 'dateTime', 'INTEGER', False, None, True),
 
 class Common(unittest.TestCase):
 
+    def __init__(self, db_dict, *args, **kwargs):
+        self.db_dict = db_dict
+        super(Common, self).__init__(*args, **kwargs)
+
+    def runTest(self, *args, **kwargs):
+        pass
+
     def setUp(self):
         self.tearDown()
 
@@ -207,8 +214,7 @@ class Common(unittest.TestCase):
 class TestSqlite(Common):
 
     def __init__(self, *args, **kwargs):
-        self.db_dict = sqlite_db_dict
-        super(TestSqlite, self).__init__(*args, **kwargs)
+        super(TestSqlite, self).__init__(sqlite_db_dict, *args, **kwargs)
 
     def test_variable(self):
         weedb.create(self.db_dict)
@@ -236,8 +242,7 @@ class TestMySQL(Common):
         super(TestMySQL, self).setUp()
 
     def __init__(self, *args, **kwargs):
-        self.db_dict = mysql_db_dict
-        super(TestMySQL, self).__init__(*args, **kwargs)
+        super(TestMySQL, self).__init__(mysql_db_dict, *args, **kwargs)
 
     def test_variable(self):
         weedb.create(self.db_dict)
