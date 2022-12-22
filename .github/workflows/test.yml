@@ -16,9 +16,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Install test prereqs
-        run: |
+      run: |
 
-          cd /; sudo pip install pytest pytest-cov; cd -      
+        cd /; sudo pip install pytest pytest-cov; cd -      
 
     - name: Set up mysql/mariadb
       run: |
