@@ -1,4 +1,4 @@
-name: Python application
+name: Run Tests
 
 on:
   push:
@@ -63,4 +63,7 @@ jobs:
         # This is a nice dimple test
         #PYTHONPATH=bin python3 bin/weewx/tests/test_units.py 
 
-        PYTHONPATH=bin pytest -v bin
+        #PYTHONPATH=bin pytest -v bin
+
+        # Example of calculating coverage, but using codecov probably makes more sense
+        PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
