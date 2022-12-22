@@ -43,4 +43,13 @@ jobs:
         sudo apt-get install -y python3-usb
         sudo apt-get install -y python3-cheetah
         sudo apt-get install -y python3-ephem
-        sudo apt-get install -y python3-mysqldb        
+        sudo apt-get install -y python3-mysqldb       
+
+    - name: setup and run tests
+      run: |        
+      
+        PYTHONPATH=bin python3 bin/weedb/tests/test_weedb.py
+
+        PYTHONPATH=bin python3 bin/weedb/tests/test_errors.py
+
+        PYTHONPATH=bin python3 bin/weewx/tests/test_units.py 
