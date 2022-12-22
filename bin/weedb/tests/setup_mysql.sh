@@ -15,7 +15,7 @@
 #
 echo "Give the root password when prompted->"
 # Use the TCP protocol so we can connect to a Docker container running MySQL.
-mysql --force --protocol=tcp -u root << EOF
+mysql --force -u root << EOF
 drop user if exists 'weewx';
 drop user if exists 'weewx1';
 drop user if exists 'weewx2';
