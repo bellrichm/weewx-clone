@@ -44,4 +44,16 @@ jobs:
         sudo apt-get install -y python3-usb
         sudo apt-get install -y python3-cheetah
         sudo apt-get install -y python3-ephem
-        sudo apt-get install -y python3-mysqldb
+        sudo apt-get install -y python3-mysqldb       
+
+    - name: run tests
+      run: |        
+
+        # This is a good test to check that the databases are setup
+        #PYTHONPATH=bin python3 bin/weedb/tests/test_weedb.py
+
+        # This is a good test that the id has reasonable privileges (not root)
+        #PYTHONPATH=bin python3 bin/weedb/tests/test_errors.py
+
+        # This is a nice dimple test
+        #PYTHONPATH=bin python3 bin/weewx/tests/test_units.py 
