@@ -1,0 +1,26 @@
+name: Python application
+
+on:
+  push:
+    # branches: [ "master" ]
+  pull_request:
+    # branches: [ "master" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up mysql/mariadb
+      run: |
+
+        sudo apt-get update
+        sudo apt-get install -y mariadb-server
+        sudo service mariadb start
+
+        # a simple check that db server is up and running
+        # sudo mysql -u root -e "SHOW DATABASES"
