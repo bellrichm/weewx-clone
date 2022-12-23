@@ -31,7 +31,7 @@ jobs:
       if: ${{ env.ACT }}
       run: |
         
-        sudo apt-get install -y python3-pip
+        sudo apt-get install -yqq python3-pip
 
     - name: Install test environment prereqs
       run: |
@@ -41,7 +41,7 @@ jobs:
     - name: Set up mysql/mariadb
       run: |
 
-        sudo apt-get install -y mariadb-server
+        sudo apt-get install -yqq mariadb-server
         sudo service mariadb start
 
         # a simple check that db server is up and running
@@ -60,13 +60,13 @@ jobs:
     - name: Install WeeWX prereqs
       run: |        
 
-        sudo apt-get install -y python3-configobj
-        sudo apt-get install -y python3-pil
-        sudo apt-get install -y python3-serial
-        sudo apt-get install -y python3-usb
-        sudo apt-get install -y python3-cheetah
-        sudo apt-get install -y python3-ephem
-        sudo apt-get install -y python3-mysqldb       
+        sudo apt-get install -yqq python3-configobj
+        sudo apt-get install -yqq python3-pil
+        sudo apt-get install -yqq python3-serial
+        sudo apt-get install -yqq python3-usb
+        sudo apt-get install -yqq python3-cheetah
+        sudo apt-get install -yqq python3-ephem
+        sudo apt-get install -yqq python3-mysqldb       
 
     - name: Run tests
       run: |        
@@ -80,7 +80,19 @@ jobs:
         # This is a nice simple test
         #PYTHONPATH=bin python3 bin/weewx/tests/test_units.py
 
-        # Example of calculating coverage, but using codecov probably makes more sense
-        #PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
+        # Example of calculating coverage.
+        # some of these options generate reports that are currently not used.
+        PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
 
-        PYTHONPATH=bin pytest -v bin
+        # Example just running tests
+        #PYTHONPATH=bin pytest -v bin
+
+    - name: Upload coverage to Codecov
+      if: ${{ !env.ACT }}
+      uses: codecov/codecov-action@v3
+      with:
+        #dry_run: true
+        #verbose: true
+        fail_ci_if_error: true
+        files: ./coverage.xml
+        
