@@ -1,4 +1,4 @@
-name: Run Tests 
+name: Run Tests
 # This can be run/tested locally using, https://github.com/nektos/act
 # Example invocation:
 #     sudo /home/richbell/bin/act push -P ubuntu-latest=catthehacker/ubuntu:runner-latest 
@@ -8,9 +8,9 @@ name: Run Tests
 #       Some tests fail when run using 'root'.
 on:
   push:
-    #branches: [ "master" ]
+    branches: [ "master" ]
   pull_request:
-    #branches: [ "master" ]
+    branches: [ "master" ]
 
 permissions:
   contents: read
