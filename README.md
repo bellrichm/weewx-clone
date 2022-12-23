@@ -1,6 +1,7 @@
+# weewx-clone
 
-This is a 'clone' of https://github.com/weewx/weewx to prototype testing WeeWX in a Github action.
-Do not use it for anything else!
+This is a 'clone' of [WeeWX](https://github.com/weewx/weewx) to prototype testing WeeWX in a Github action.
+**Do not use it for anything else!**
 
 ## WeeWX code updates
 
@@ -10,8 +11,4 @@ Do not use it for anything else!
 
 ### bin/weewdb/tests/test_weedb.py
 
-
-
-<h2>Licensing</h2>
-
-WeeWX is licensed under the GNU Public License v3.
+## Miscellaneous notes
