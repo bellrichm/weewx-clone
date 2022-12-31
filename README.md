@@ -26,6 +26,14 @@ For additional information see [test discovery](https://docs.pytest.org/en/7.2.x
 When running under pytest received the following error
 ```AttributeError: 'Common' object has no attribute 'db_dict'```
 
+## python -m unittest discover
+
+I also attempted to have the tests `discovered` with unittest.
+First, this requires a `__init__.py` in each test directory.
+Once these were added Igot the following error, `ModuleNotFoundError: No module named 'gen_fake_data'`.
+I worked around thsi by using thos invocation, `PYTHONPATH=weewx/tests python3 -m unittest discover`.
+This resulted in some date/time tests failing because the test output had the AM/PM designation.
+
 ## Miscellaneous notes
 
 ### Use of mariadb
