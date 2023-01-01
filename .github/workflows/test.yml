@@ -89,11 +89,13 @@ jobs:
         #PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
 
         # Example just running tests
-        #PYTHONPATH=bin pytest -v bin
+        #PYTHONPATH=bin/weewx/tests pytest -v bin
+        PYTHONPATH=bin/weewx/tests coverage run --branch -m pytest -v bin
 
         # Experiment with running unittest in discover mode
         #PYTHONPATH=bin/weewx/tests python -m unittest discover -v bin
-        PYTHONPATH=bin/weewx/tests coverage run --branch -m unittest discover -v bin
+        #PYTHONPATH=bin/weewx/tests coverage run --branch -m unittest discover -v bin
+        
         coverage xml -i
         coverage report -i
 
