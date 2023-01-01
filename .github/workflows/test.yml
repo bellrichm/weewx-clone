@@ -32,6 +32,10 @@ jobs:
       run: |
         
         sudo apt-get install -yqq python3-pip
+        # This is needed when running unittest in 'discover' mode
+        # This was the only logging servuce I could get to run
+        sudo apt-get install -yqq syslog-ng
+        sudo /etc/init.d/syslog-ng start        
 
     - name: Install test environment prereqs
       run: |
@@ -82,10 +86,16 @@ jobs:
 
         # Example of calculating coverage.
         # some of these options generate reports that are currently not used.
-        PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
+        #PYTHONPATH=bin pytest -v --junitxml=junit.xml --cov-branch --cov-report term-missing --cov-report xml:coverage.xml --cov-report html:coverage --cov bin bin 
 
         # Example just running tests
         #PYTHONPATH=bin pytest -v bin
+
+        # Experiment with running unittest in discover mode
+        #PYTHONPATH=bin/weewx/tests python -m unittest discover bin
+        PYTHONPATH=bin/weewx/tests coverage run --branch -m unittest discover  bin
+        coverage xml -i
+        coverage report -m -i
 
     - name: Upload coverage to Codecov
       if: ${{ !env.ACT }}
