@@ -26,13 +26,24 @@ For additional information see [test discovery](https://docs.pytest.org/en/7.2.x
 When running under pytest received the following error
 ```AttributeError: 'Common' object has no attribute 'db_dict'```
 
-## python -m unittest discover
+## python -m unittest discover -v bin
 
-I also attempted to have the tests `discovered` with unittest.
+I also ran the tests in `discover`mode  with unittest.
 First, this requires a `__init__.py` in each test directory.
-Once these were added Igot the following error, `ModuleNotFoundError: No module named 'gen_fake_data'`.
-I worked around thsi by using thos invocation, `PYTHONPATH=weewx/tests python3 -m unittest discover`.
-This resulted in some date/time tests failing because the test output had the AM/PM designation.
+Once these were added I got the following error, `ModuleNotFoundError: No module named 'gen_fake_data'`.
+I worked around this by using this invocation, `PYTHONPATH=bin/weewx/tests python -m unittest discover -v bin`.
+Next challenge is that some tests run code that use logging.
+So a logger had to be installed in the `act` docker image.
+The only one I got to work was `syslog-ng`.
+Note, another option would be to mock the logger.
+
+## Running coverage
+
+```text
+PYTHONPATH=bin/weewx/tests coverage run --branch -m unittest discover -v bin
+coverage xml -i
+coverage report -i
+```
 
 ## Miscellaneous notes
 
