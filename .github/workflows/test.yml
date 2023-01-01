@@ -8,9 +8,9 @@ name: Run Tests
 #       Some tests fail when run using 'root'.
 on:
   push:
-    branches: [ "master" ]
+    #branches: [ "master" ]
   pull_request:
-    branches: [ "master" ]
+    #branches: [ "master" ]
 
 permissions:
   contents: read
