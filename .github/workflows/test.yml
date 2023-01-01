@@ -8,9 +8,9 @@ name: Run Tests
 #       Some tests fail when run using 'root'.
 on:
   push:
-    #branches: [ "master" ]
+    branches: [ "master" ]
   pull_request:
-    #branches: [ "master" ]
+    branches: [ "master" ]
 
 permissions:
   contents: read
@@ -92,10 +92,10 @@ jobs:
         #PYTHONPATH=bin pytest -v bin
 
         # Experiment with running unittest in discover mode
-        #PYTHONPATH=bin/weewx/tests python -m unittest discover bin
-        PYTHONPATH=bin/weewx/tests coverage run --branch -m unittest discover  bin
+        #PYTHONPATH=bin/weewx/tests python -m unittest discover -v bin
+        PYTHONPATH=bin/weewx/tests coverage run --branch -m unittest discover -v bin
         coverage xml -i
-        coverage report -m -i
+        coverage report -i
 
     - name: Upload coverage to Codecov
       if: ${{ !env.ACT }}
